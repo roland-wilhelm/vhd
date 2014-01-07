@@ -50,9 +50,11 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(sbindir)"
 PROGRAMS = $(sbin_PROGRAMS)
-am_vhdd_OBJECTS = main.$(OBJEXT) debug.$(OBJEXT)
+am_vhdd_OBJECTS = vhdd-main.$(OBJEXT) vhdd-debug.$(OBJEXT) \
+	vhdd-ProxyDBus.$(OBJEXT)
 vhdd_OBJECTS = $(am_vhdd_OBJECTS)
-vhdd_LDADD = $(LDADD)
+am__DEPENDENCIES_1 =
+vhdd_DEPENDENCIES = $(am__DEPENDENCIES_1)
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/build-aux/depcomp
 am__depfiles_maybe = depfiles
@@ -108,6 +110,8 @@ ECHO_T = @ECHO_T@
 EGREP = @EGREP@
 EXEEXT = @EXEEXT@
 FGREP = @FGREP@
+GLIB_CFLAGS = @GLIB_CFLAGS@
+GLIB_LIBS = @GLIB_LIBS@
 GREP = @GREP@
 INSTALL = @INSTALL@
 INSTALL_DATA = @INSTALL_DATA@
@@ -139,6 +143,9 @@ PACKAGE_TARNAME = @PACKAGE_TARNAME@
 PACKAGE_URL = @PACKAGE_URL@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
+PKG_CONFIG = @PKG_CONFIG@
+PKG_CONFIG_LIBDIR = @PKG_CONFIG_LIBDIR@
+PKG_CONFIG_PATH = @PKG_CONFIG_PATH@
 RANLIB = @RANLIB@
 SED = @SED@
 SET_MAKE = @SET_MAKE@
@@ -198,14 +205,17 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-AM_CPPFLAGS = \
+vhdd_CPPFLAGS = \
 	-I$(top_srcdir)/include \
-	-I$(top_srcdir)/canMsgApi
+	-I$(top_srcdir)/canMsgApi \
+	$(GLIB_CFLAGS)
 
 vhdd_SOURCES = \
 	main.cpp \
-	debug.cpp debug.h 
+	debug.cpp debug.h \
+	ProxyDBus.cpp ProxyDBus.h
 
+vhdd_LDADD = $(GLIB_LIBS)
 all: all-am
 
 .SUFFIXES:
@@ -293,8 +303,9 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/debug.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/vhdd-ProxyDBus.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/vhdd-debug.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/vhdd-main.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -316,6 +327,48 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(LTCXXCOMPILE) -c -o $@ $<
+
+vhdd-main.o: main.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(vhdd_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT vhdd-main.o -MD -MP -MF $(DEPDIR)/vhdd-main.Tpo -c -o vhdd-main.o `test -f 'main.cpp' || echo '$(srcdir)/'`main.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/vhdd-main.Tpo $(DEPDIR)/vhdd-main.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='main.cpp' object='vhdd-main.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(vhdd_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o vhdd-main.o `test -f 'main.cpp' || echo '$(srcdir)/'`main.cpp
+
+vhdd-main.obj: main.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(vhdd_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT vhdd-main.obj -MD -MP -MF $(DEPDIR)/vhdd-main.Tpo -c -o vhdd-main.obj `if test -f 'main.cpp'; then $(CYGPATH_W) 'main.cpp'; else $(CYGPATH_W) '$(srcdir)/main.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/vhdd-main.Tpo $(DEPDIR)/vhdd-main.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='main.cpp' object='vhdd-main.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(vhdd_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o vhdd-main.obj `if test -f 'main.cpp'; then $(CYGPATH_W) 'main.cpp'; else $(CYGPATH_W) '$(srcdir)/main.cpp'; fi`
+
+vhdd-debug.o: debug.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(vhdd_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT vhdd-debug.o -MD -MP -MF $(DEPDIR)/vhdd-debug.Tpo -c -o vhdd-debug.o `test -f 'debug.cpp' || echo '$(srcdir)/'`debug.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/vhdd-debug.Tpo $(DEPDIR)/vhdd-debug.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='debug.cpp' object='vhdd-debug.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(vhdd_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o vhdd-debug.o `test -f 'debug.cpp' || echo '$(srcdir)/'`debug.cpp
+
+vhdd-debug.obj: debug.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(vhdd_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT vhdd-debug.obj -MD -MP -MF $(DEPDIR)/vhdd-debug.Tpo -c -o vhdd-debug.obj `if test -f 'debug.cpp'; then $(CYGPATH_W) 'debug.cpp'; else $(CYGPATH_W) '$(srcdir)/debug.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/vhdd-debug.Tpo $(DEPDIR)/vhdd-debug.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='debug.cpp' object='vhdd-debug.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(vhdd_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o vhdd-debug.obj `if test -f 'debug.cpp'; then $(CYGPATH_W) 'debug.cpp'; else $(CYGPATH_W) '$(srcdir)/debug.cpp'; fi`
+
+vhdd-ProxyDBus.o: ProxyDBus.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(vhdd_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT vhdd-ProxyDBus.o -MD -MP -MF $(DEPDIR)/vhdd-ProxyDBus.Tpo -c -o vhdd-ProxyDBus.o `test -f 'ProxyDBus.cpp' || echo '$(srcdir)/'`ProxyDBus.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/vhdd-ProxyDBus.Tpo $(DEPDIR)/vhdd-ProxyDBus.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='ProxyDBus.cpp' object='vhdd-ProxyDBus.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(vhdd_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o vhdd-ProxyDBus.o `test -f 'ProxyDBus.cpp' || echo '$(srcdir)/'`ProxyDBus.cpp
+
+vhdd-ProxyDBus.obj: ProxyDBus.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(vhdd_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT vhdd-ProxyDBus.obj -MD -MP -MF $(DEPDIR)/vhdd-ProxyDBus.Tpo -c -o vhdd-ProxyDBus.obj `if test -f 'ProxyDBus.cpp'; then $(CYGPATH_W) 'ProxyDBus.cpp'; else $(CYGPATH_W) '$(srcdir)/ProxyDBus.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/vhdd-ProxyDBus.Tpo $(DEPDIR)/vhdd-ProxyDBus.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='ProxyDBus.cpp' object='vhdd-ProxyDBus.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(vhdd_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o vhdd-ProxyDBus.obj `if test -f 'ProxyDBus.cpp'; then $(CYGPATH_W) 'ProxyDBus.cpp'; else $(CYGPATH_W) '$(srcdir)/ProxyDBus.cpp'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo
@@ -528,7 +581,6 @@ uninstall-am: uninstall-sbinPROGRAMS
 	maintainer-clean-generic mostlyclean mostlyclean-compile \
 	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
 	tags uninstall uninstall-am uninstall-sbinPROGRAMS
-
 
 # vhdd_LDADD = ../canMsgApi/libCanMsgApi.la
 

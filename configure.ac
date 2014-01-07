@@ -10,6 +10,9 @@ LT_INIT
 AC_PROG_CXX
 
 # Checks for libraries.
+PKG_CHECK_MODULES(GLIB, glib-2.0 >= 2.28 gio-2.0)
+
+
 # Checks for header files.
 # Checks for typedefs, structures, and compiler characteristics.
 # Checks for library functions.
