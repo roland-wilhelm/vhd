@@ -14,23 +14,17 @@
 
 class WatchDBus {
 public:
-	WatchDBus(const gchar *a_service_name);
+	WatchDBus(const gchar *a_service_name,
+			GBusNameAppearedCallback a_on_name_appeared_cb,
+			GBusNameVanishedCallback a_on_name_vanished_cb,
+			WatchDBus *a_this);
 	virtual ~WatchDBus();
 
 private:
 	WatchDBus();
 
-	void on_name_vanished(GDBusConnection *connection,
-			const gchar *name,
-			gpointer user_data);
-
-	void on_name_appeared(GDBusConnection *connection,
-			const gchar *name,
-			const gchar *name_owner,
-			gpointer user_data);
-
-
 	guint m_watch_id;
+
 };
 
 #endif /* WATCHDBUS_H_ */

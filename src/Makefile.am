@@ -9,7 +9,10 @@ vhdd_CPPFLAGS = \
 vhdd_SOURCES = \
 	main.cpp \
 	debug.cpp debug.h \
-	ProxyDBus.cpp ProxyDBus.h
+	WatchDBus.cpp WatchDBus.h \
+	ProxyDBus.cpp ProxyDBus.h \
+	WatchConnman.cpp WatchConnman.h \
+	ConnmanManager.cpp ConnmanManager.h
 	
 vhdd_LDADD = $(GLIB_LIBS)
 # vhdd_LDADD = ../canMsgApi/libCanMsgApi.la

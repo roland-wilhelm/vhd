@@ -25,3 +25,7 @@ stamp-h1
 canMsgApi/.deps/
 src/.deps/
 src/vhdd
+build-aux/
+config.h.in
+.autotools
+.settings/

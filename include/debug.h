@@ -9,7 +9,7 @@
 #define DEBUG_H_
 
 
-#define VHD_DEBUG_LEVEL 2
+#define VHD_DEBUG_LEVEL 3
 
 #if VHD_DEBUG_LEVEL >= 1
 #define DBG _DBG
