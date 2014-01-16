@@ -31,9 +31,9 @@
 
 
 #define ERR(fmt, args...) \
-		debug_print("ERROR **: ", "%s: %s:%d: " fmt, __FILE__, __FUNCTION__, __LINE__, ##args)
+		debug_print("ERROR **:", "%s:%s:%d: " fmt, __FILE__, __FUNCTION__, __LINE__, ##args)
 #define _DBG(fmt, args...) \
-		debug_print("[DEBUG] : ", "%s: %s:%d: " fmt, __FILE__, __FUNCTION__, __LINE__, ##args)
+		debug_print("[DEBUG] :", "%s:%s:%d: " fmt, __FILE__, __FUNCTION__, __LINE__, ##args)
 
 
 void debug_print(const char *name, const char *fmt, ...);

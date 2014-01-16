@@ -9,6 +9,9 @@
 #define WATCHCONNMAN_H_
 
 #include "WatchDBus.h"
+#include "RssBased.h"
+
+class ConnmanManager;
 
 class WatchConnman : public WatchDBus {
 public:
@@ -16,6 +19,9 @@ public:
 	virtual ~WatchConnman();
 
 private:
+
+	ConnmanManager *m_manager;
+	RssBased *m_rss;
 
 	static void on_name_vanished_cb(GDBusConnection *connection,
 			const gchar *name,

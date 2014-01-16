@@ -12,7 +12,16 @@ vhdd_SOURCES = \
 	WatchDBus.cpp WatchDBus.h \
 	ProxyDBus.cpp ProxyDBus.h \
 	WatchConnman.cpp WatchConnman.h \
-	ConnmanManager.cpp ConnmanManager.h
+	ConnmanManager.cpp ConnmanManager.h \
+	ConnmanService.cpp ConnmanService.h \
+	types.cpp types.h \
+	IParameter.cpp IParameter.h \
+	INetwork.cpp INetwork.h \
+	Wlan.cpp Wlan.h \
+	Qmi.cpp Qmi.h \
+	DataStorage.cpp DataStorage.h \
+	IVhda.cpp IVhda.h \
+	RssBased.cpp RssBased.h
 	
 vhdd_LDADD = $(GLIB_LIBS)
 # vhdd_LDADD = ../canMsgApi/libCanMsgApi.la

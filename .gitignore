@@ -29,3 +29,7 @@ build-aux/
 config.h.in
 .autotools
 .settings/
+Makefile.in
+src/Makefile.in
+canMsgApi/Makefile.in
+config.status

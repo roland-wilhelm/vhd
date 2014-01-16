@@ -18,24 +18,29 @@ typedef struct {
 
 class ProxyDBus {
 public:
-	ProxyDBus(const gchar *a_service_name,
-			const gchar *a_object_path,
-			const gchar *a_interface);
 	virtual ~ProxyDBus();
 
-	gint create_proxy_sync();
-	const GDBusProxy* get_proxy(void) const;
-	GVariant* call_sync(const char* a_method, const char* a_parameter) const;
+	const gchar* get_service_name() const;
+	const GDBusProxy* get_proxy() const;
+	const gchar* get_object_path() const;
 	gint register_signal(const gchar *a_signal_name, GCallback a_cb, gpointer a_user_data);
 	gint unregister_signal(const gchar *a_signal_name);
+
+protected:
+	ProxyDBus(const gchar *a_service_name,
+				const gchar *a_object_path,
+				const gchar *a_interface);
+
+	gint create_proxy_sync();
+	GVariant *call_sync(const char* a_method, const char* a_parameter) const;
 
 
 private:
 	void add_signal(const gchar *a_signal_name, gint a_handler_id);
 	void remove_signal(_Data *a_data);
 	_Data* get_data(const gchar *a_signal_name);
-	void delete_proxy(void);
-	void remove_signal_all(void);
+	void delete_proxy();
+	void remove_signal_all();
 
 	gchar *m_service_name;
 	gchar *m_object_path;

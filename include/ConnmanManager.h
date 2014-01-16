@@ -10,6 +10,7 @@
 
 #include "ProxyDBus.h"
 
+
 class ConnmanService;
 
 class ConnmanManager : public ProxyDBus {
@@ -20,10 +21,27 @@ public:
 	virtual ~ConnmanManager();
 
 	gint create_manager_sync();
-	void clean_manager();
-	gint request_services_sync();
+	gint verdict_ho(const gchar *object_path);
+	gint start();
+	void stop();
 
 private:
+	GHashTable *m_services;
+	gboolean m_do_logging;
+	guint m_interval;
+	GThread *m_thread;
+
+	static GStaticMutex services_mutex;
+
+	gint request_services_sync();
+	ConnmanService* lookup_service(const gchar *object_path);
+	ConnmanService* create_service(const gchar *a_object_path);
+	gint add_service(ConnmanService *a_service);
+	gint delete_service(const gchar *object_path);
+	void delete_services();
+	void run();
+	static void* helper(gpointer a_user_data);
+	GList* delete_invalid_services();
 
 };
 

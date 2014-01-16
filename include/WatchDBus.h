@@ -17,7 +17,7 @@ public:
 	WatchDBus(const gchar *a_service_name,
 			GBusNameAppearedCallback a_on_name_appeared_cb,
 			GBusNameVanishedCallback a_on_name_vanished_cb,
-			WatchDBus *a_this);
+			WatchDBus *a_derivation);
 	virtual ~WatchDBus();
 
 private:

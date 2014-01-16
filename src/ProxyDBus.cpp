@@ -11,6 +11,7 @@
 #include "debug.h"
 
 
+
 ProxyDBus::ProxyDBus(const gchar *a_service_name,
 		const gchar *a_object_path,
 		const gchar *a_interface) : m_service_name(g_strdup(a_service_name)),
@@ -20,7 +21,6 @@ ProxyDBus::ProxyDBus(const gchar *a_service_name,
 									m_table(NULL) {
 
 	m_table = g_hash_table_new(g_str_hash, g_str_equal);
-
 }
 
 ProxyDBus::~ProxyDBus() {
@@ -44,12 +44,12 @@ gint ProxyDBus::create_proxy_sync() {
 	if(m_proxy) {
 
 		DBG("DBus proxy exists already, delete it.");
-		delete_proxy();
+		return 0;
 	}
 
 	if((m_service_name == NULL) || (m_object_path == NULL) || (m_interface == NULL)) {
 
-		ERR("service name '%p', object path '%p', interface '%s'.", m_service_name, m_object_path, m_interface);
+		ERR("service name '%p', object path '%p', interface '%p'.", m_service_name, m_object_path, m_interface);
 		return -1;
 	}
 
@@ -86,12 +86,22 @@ void ProxyDBus::delete_proxy() {
 	}
 }
 
+const gchar* ProxyDBus::get_service_name() const {
+
+	return m_service_name;
+}
+
 const GDBusProxy* ProxyDBus::get_proxy() const {
 
 	return m_proxy;
 }
 
-GVariant* ProxyDBus::call_sync(const char* a_method, const char* a_parameter) const {
+const gchar* ProxyDBus::get_object_path() const {
+
+	return m_object_path;
+}
+
+GVariant *ProxyDBus::call_sync(const char* a_method, const char* a_parameter) const {
 
 	GError *error = NULL;
 	GVariant *result = NULL, *parameter = NULL;
@@ -110,18 +120,18 @@ GVariant* ProxyDBus::call_sync(const char* a_method, const char* a_parameter) co
 		return NULL;
 	}
 
-	/*
-	 * FIXME: what happens if parameter is NULL
-	 */
-	parameter = g_variant_new("(s)", a_parameter);
+	if(a_parameter != NULL) {
 
-	if(!parameter) {
+		parameter = g_variant_new("(o)", a_parameter);
 
-		ERR("Conversion cstring '%s' --> gvariant.", parameter);
-		return NULL;
+		if(!parameter) {
+
+			ERR("Conversion cstring '%s' --> gvariant.", parameter);
+			return NULL;
+		}
 	}
 
-	DBG("Invoke DBus call method '%s' parameter '%s'", a_method, a_parameter);
+	DBG("Invoke DBus call method '%s' parameter '%s'", a_method, a_parameter ? a_parameter : "none");
 	result = g_dbus_proxy_call_sync(m_proxy,
 									a_method,
 									parameter,	/* Parameter */
